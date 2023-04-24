@@ -20,7 +20,7 @@ class TodoDatabase {
   int countItems(String categorie, List list){
     int i, nbr = 0;
     for(i=0;i<list.length;i++){
-      if(list[i][1] == categorie){
+      if(list[i][1] == categorie && list[i][2] == false){
         nbr++;
       }
     }
