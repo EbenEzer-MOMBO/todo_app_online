@@ -7,7 +7,9 @@ import 'package:todo_app_sync/components/pad_button.dart';
 import 'package:todo_app_sync/data/database.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final String surname; // Add this line
+
+  const MainPage({Key? key, required this.surname}) : super(key: key); // Modify the constructor
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -16,16 +18,17 @@ class MainPage extends StatefulWidget {
 const List<String> _options = [
   'personnel',
   'important',
-  'sync',
 ];
 
 class _MainPageState extends State<MainPage> {
+  String _surname = '';
   //hive box
   final _mybox = Hive.box('mybox');
   TodoDatabase db = TodoDatabase();
 
   @override
   void initState() {
+    _surname = widget.surname;
     //if fisrt time, default data
     if (_mybox.get("TODOLIST") == null) {
       db.createInitData();
@@ -160,20 +163,13 @@ class _MainPageState extends State<MainPage> {
                         )),
                     const Spacer(),
                     // IconButton(
-                    //     onPressed: () {},
-                    //     icon: const Icon(
-                    //       Icons.search,
-                    //       color: CustomColors.primaryColor,
-                    //       size: 35,)
+                    //   onPressed: () {},
+                    //   icon: const Icon(
+                    //     Icons.notifications,
+                    //     color: CustomColors.primaryColor,
+                    //     size: 35,
+                    //   ),
                     // ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.notifications,
-                        color: CustomColors.primaryColor,
-                        size: 35,
-                      ),
-                    ),
                     IconButton(
                       onPressed: signUserOut,
                       icon: const Icon(
@@ -191,13 +187,13 @@ class _MainPageState extends State<MainPage> {
               ),
 
               //quoi d'neuf
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Text(
-                    "Quoi d'neuf, Eben !",
-                    style: TextStyle(
+                    "Quoi d'neuf, $_surname !",
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
